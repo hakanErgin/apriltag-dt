@@ -1,7 +1,10 @@
-import numpy as np
 import cv2 as cv
+import os
+os.environ["OPENCV_FFMPEG_CAPTURE_OPTIONS"] = "rtsp_transport;tcp"
 
-cap = cv.VideoCapture("rtsp://localhost:8554/cam")
+cap = cv.VideoCapture("rtsp://localhost:8554/cam", cv.CAP_FFMPEG)
+
+# cap = cv.VideoCapture("rtsp://localhost:8554/cam")
 if not cap.isOpened():
     print("Cannot open camera")
     exit()
