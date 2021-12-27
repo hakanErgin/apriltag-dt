@@ -1,6 +1,14 @@
 import cv2 as cv
-from dt_apriltags import Detector
+import os
 
+from dt_apriltags import Detector
+from calibration.calibrate import get_params
+
+display_ip = os.environ.get('DISPLAY')[:-4]
+print(display_ip)
+
+params = get_params()
+print('params', params)
 
 at_detector = Detector(families='tag36h11',
                        nthreads=1,
@@ -10,7 +18,7 @@ at_detector = Detector(families='tag36h11',
                        decode_sharpening=0.25,
                        debug=0)
 
-cap = cv.VideoCapture("rtsp://192.168.1.33:8554/cam")
+cap = cv.VideoCapture("rtsp://" + display_ip + ":8554/cam")
 if not cap.isOpened():
     print("Cannot open camera")
     exit()
@@ -23,11 +31,11 @@ while True:
         break
     # Our operations on the frame come here
     gray = cv.cvtColor(frame, cv.COLOR_BGR2GRAY)
-    tags = at_detector.detect(gray)
+    tags = at_detector.detect(gray, True, params, 0.2)
     for tag in tags:
         for idx in range(len(tag.corners)):
             cv.line(frame, tuple(tag.corners[idx-1, :].astype(int)), tuple(tag.corners[idx, :].astype(int)), (0, 255, 0))
-
+        print(tag)
 
     # Display the resulting frame
     cv.imshow('frame', frame)
