@@ -1,6 +1,6 @@
 import cv2 as cv
 import os
-# from draw_pose_box import draw_axis
+# from detection_test.draw_pose_box import draw_axis
 from dt_apriltags import Detector
 from calibration.calibrate import get_params
 
