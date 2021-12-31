@@ -1,0 +1,4 @@
+dt-apriltags==3.1.7
+numpy==1.21.5
+opencv-python==4.5.4.60
+PyYAML==5.4.1
