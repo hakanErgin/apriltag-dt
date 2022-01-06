@@ -4,7 +4,7 @@ import os
 from dt_apriltags import Detector
 from calibration.calibrate import get_params
 
-display_ip = os.environ.get('DISPLAY')[:-4]
+display_ip = os.environ.get('DISP')
 print(display_ip)
 
 params = get_params()
@@ -18,8 +18,9 @@ at_detector = Detector(families='tag36h11',
                        refine_edges=1,
                        decode_sharpening=0.25,
                        debug=0)
-
-cap = cv.VideoCapture("rtsp://" + display_ip + ":8554/cam")
+rtsp_stream = "rtsp://" + display_ip + ":8554/cam"
+print(rtsp_stream)
+cap = cv.VideoCapture(rtsp_stream)
 if not cap.isOpened():
     print("Cannot open camera")
     exit()
