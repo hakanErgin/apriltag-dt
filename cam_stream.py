@@ -5,7 +5,7 @@ from dt_apriltags import Detector
 from calibration.calibrate import get_params
 import math
 from scipy.spatial.transform import Rotation as R
-from rot_mat import rotationMatrixToEulerAngles, eul_deg
+from rot_mat import rotationMatrixToEulerAngles, eul_deg, euler_angles_from_rotation_matrix
 
 display_ip = os.environ.get('DISP')
 print(display_ip)
@@ -46,9 +46,9 @@ while True:
 
         rvec = tag.pose_R
         tvec = tag.pose_t
-        # r = R.from_matrix(rvec)
-        # print(r.as_euler('zyx', degrees=True))
-        print(eul_deg(rvec))
+        r = R.from_matrix(rvec)
+        print(r.as_euler('ZYX', degrees=True))
+        # print(tag)
 
         # print("rvec", rvec, "\ntvec", tvec)
         cv.putText(frame, "%.1f cm" % ((tvec[2] * 10)), (0, 50), cv.FONT_HERSHEY_SIMPLEX, 1.0, (244, 244, 244))
