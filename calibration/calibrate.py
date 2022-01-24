@@ -36,7 +36,8 @@ for fname in images:
 
 ret, mtx, dist, rvecs, tvecs = cv.calibrateCamera(objpoints, imgpoints, gray.shape[::-1], None, None)
 
-print(mtx)
+# print(ret, mtx, dist, rvecs, tvecs)
+
 def get_params():
     return mtx
 

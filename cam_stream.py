@@ -3,6 +3,9 @@ import os
 # from detection_test.draw_pose_box import draw_axis
 from dt_apriltags import Detector
 from calibration.calibrate import get_params
+import math
+from scipy.spatial.transform import Rotation as R
+from rot_mat import rotationMatrixToEulerAngles, eul_deg
 
 display_ip = os.environ.get('DISP')
 print(display_ip)
@@ -40,7 +43,16 @@ while True:
             cv.line(frame, tuple(tag.corners[idx-1, :].astype(int)), tuple(tag.corners[idx, :].astype(int)), (0, 255, 0))
         # uncomment for draw test
         # draw_axis(frame, tag.pose_R, tag.pose_t, params)
-        
+
+        rvec = tag.pose_R
+        tvec = tag.pose_t
+        # r = R.from_matrix(rvec)
+        # print(r.as_euler('zyx', degrees=True))
+        print(eul_deg(rvec))
+
+        # print("rvec", rvec, "\ntvec", tvec)
+        cv.putText(frame, "%.1f cm" % ((tvec[2] * 10)), (0, 50), cv.FONT_HERSHEY_SIMPLEX, 1.0, (244, 244, 244))
+
 
     # Display the resulting frame
     cv.imshow('frame', frame)
